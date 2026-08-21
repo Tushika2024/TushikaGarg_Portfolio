@@ -241,7 +241,7 @@ export function CenterScreen({ stage, reduced, file, progress, onOpen, kanha }: 
           <div className="bigline">Build the model.<br /><span>Then explain it.</span></div>
           <div className="contactlines">
             {profile.email}<br />{profile.phone}<br />
-            github.com/Tushika2024<br />linkedin.com/in/tushika-garg
+            github.com/Tushika2024<br />linkedin.com/in/tushika-garg-84a488318
           </div>
         </Slab>
       </div>

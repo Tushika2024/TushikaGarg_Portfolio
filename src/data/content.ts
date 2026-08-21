@@ -23,7 +23,7 @@ export const profile: Profile = {
   email: 'gargtushikabsr@gmail.com',
   phone: '+91 70783 23902',
   github: 'https://github.com/Tushika2024',
-  linkedin: 'https://linkedin.com/in/tushika-garg',
+  linkedin: 'https://www.linkedin.com/in/tushika-garg-84a488318/',
   leetcode: 'https://leetcode.com/u/Tushika_garg/', // REPLACE if handle differs
   photo: '/tushika.jpg',
   resume: '/Tushika-Garg-Resume.pdf',

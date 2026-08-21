@@ -34,7 +34,7 @@ export function Contact() {
             <span className="lab">Phone</span><b>{profile.phone}</b><span>India · IST</span>
           </a>
           <a className="ccard" href={profile.linkedin} target="_blank" rel="noreferrer">
-            <span className="lab">LinkedIn</span><b>tushika-garg</b><span>Connect or message</span>
+            <span className="lab">LinkedIn</span><b>tushika-garg-84a488318</b><span>Connect or message</span>
           </a>
           <a className="ccard" href={profile.github} target="_blank" rel="noreferrer">
             <span className="lab">GitHub</span><b>Tushika2024</b><span>Code and contributions</span>

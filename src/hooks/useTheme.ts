@@ -22,8 +22,8 @@ function write(v: ThemeName): void {
 
 /** Light by default - a portfolio opened at 11am in an office shouldn't be a black screen. */
 function initial(): ThemeName {
-  if (typeof window === 'undefined') return 'light';
-  return read() ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (typeof window === 'undefined') return 'dark';
+  return read() ?? 'dark';
 }
 
 export interface ThemeApi {
