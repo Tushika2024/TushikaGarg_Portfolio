@@ -56,7 +56,6 @@ export function TopBar({ theme, onToggleTheme, onOpenResume }: TopBarProps) {
         <a className="hide-sm" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
         <a className="hide-sm" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
         <a className="resume" href="#" onClick={(e) => { e.preventDefault(); onOpenResume(); }}>Resume ↓</a>
-        <a className="hire" href={`mailto:${profile.email}`}>Hire me</a>
         <button className="themebtn" onClick={onToggleTheme}
                 aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
                 title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
