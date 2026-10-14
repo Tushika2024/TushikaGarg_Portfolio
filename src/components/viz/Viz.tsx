@@ -49,60 +49,69 @@ export function RocCurve({ progress, enabled }: VizProps) {
   );
 }
 
-/* ── UMAP scatter: 268 mislabels flare red as you scroll ─────────────── */
-interface Point { readonly cx: number; readonly cy: number; readonly bad: boolean }
+/* ── CITY-AI: a vehicle's path lights up camera by camera ────────────── */
+const CAMS: readonly (readonly [number, number])[] = [
+  [18, 30], [52, 18], [90, 34], [128, 20], [170, 30],
+  [30, 72], [70, 64], [108, 80], [150, 70], [182, 88],
+  [20, 118], [60, 108], [100, 126], [140, 116], [178, 128],
+];
+/** Indices into CAMS, in the order the tracked vehicle passes them. */
+const ROUTE: readonly number[] = [10, 5, 6, 2, 7, 8, 13, 14];
 
-export function UmapScatter({ progress, enabled }: VizProps) {
+export function TrajectoryTrace({ progress, enabled }: VizProps) {
+  const path = useRef<SVGPathElement>(null);
   const wrap = useRef<SVGSVGElement>(null);
-  const count = useRef<HTMLSpanElement>(null);
+  const acc = useRef<HTMLSpanElement>(null);
+  const length = useRef(0);
 
-  const points = useMemo<readonly Point[]>(() => {
-    const centres: readonly (readonly [number, number])[] = [[55, 45], [135, 50], [80, 110], [150, 105]];
-    const out: Point[] = [];
-    for (let i = 0; i < 170; i++) {
-      const c = centres[i % 4];
-      if (!c) continue;
-      const angle = Math.random() * Math.PI * 2;
-      const r = Math.pow(Math.random(), 0.6) * 26;
-      out.push({
-        cx: c[0] + Math.cos(angle) * r,
-        cy: c[1] + Math.sin(angle) * r * 0.8,
-        bad: r > 19 && Math.random() > 0.45,
-      });
-    }
-    return out;
-  }, []);
+  const d = useMemo(
+    () => ROUTE.map((i, k) => {
+      const c = CAMS[i];
+      return c ? `${k === 0 ? 'M' : 'L'}${c[0]},${c[1]}` : '';
+    }).join(' '),
+    []
+  );
 
-  const badCount = useMemo(() => points.filter((p) => p.bad).length, [points]);
+  useEffect(() => {
+    const el = path.current;
+    if (!el) return;
+    length.current = el.getTotalLength();
+    el.style.strokeDasharray = String(length.current);
+    el.style.strokeDashoffset = enabled ? String(length.current) : '0';
+  }, [enabled]);
 
   useFrame(
     useCallback((p: number) => {
       const t = ease(seg(p, 0.54, 0.64));
-      const nodes = wrap.current?.querySelectorAll<SVGCircleElement>('circle[data-bad="1"]');
-      nodes?.forEach((el, k) => {
-        el.setAttribute('opacity', t > (k / badCount) * 0.9 ? '0.9' : '0');
+      if (path.current) path.current.style.strokeDashoffset = String(length.current * (1 - t));
+      wrap.current?.querySelectorAll<SVGCircleElement>('circle[data-hop]').forEach((el) => {
+        const k = Number(el.dataset.hop);
+        el.setAttribute('fill', t >= k / (ROUTE.length - 1) - 0.001 ? 'var(--amber)' : 'var(--line-2)');
       });
-      if (count.current) count.current.textContent = String(Math.round(268 * t));
-    }, [badCount]),
+      if (acc.current) acc.current.textContent = (69.1 + 21.3 * t).toFixed(1);
+    }, []),
     progress,
     enabled
   );
 
   return (
     <>
-      <div className="eyebrow">umap · 14k corpus</div>
-      <svg ref={wrap} viewBox="0 0 200 150" style={{ width: '100%', height: 150 }} role="img"
-           aria-label="UMAP scatter plot with 268 mislabelled samples highlighted">
-        {points.map((pt, i) => (
-          <circle key={i} cx={pt.cx.toFixed(1)} cy={pt.cy.toFixed(1)} r="2"
-                  data-bad={pt.bad ? '1' : '0'}
-                  fill={pt.bad ? 'var(--red)' : 'var(--blue)'}
-                  opacity={pt.bad ? (enabled ? 0 : 0.9) : 0.55} />
-        ))}
+      <div className="eyebrow">trajectory · 30-camera grid</div>
+      <svg ref={wrap} viewBox="0 0 200 145" style={{ width: '100%', height: 145 }} role="img"
+           aria-label="A vehicle's path traced across city cameras">
+        <path ref={path} d={d} fill="none" stroke="var(--amber)" strokeWidth="1.8"
+              strokeLinejoin="round" strokeLinecap="round" />
+        {CAMS.map(([cx, cy], i) => {
+          const hop = ROUTE.indexOf(i);
+          return hop >= 0
+            ? <circle key={i} cx={cx} cy={cy} r="4" data-hop={hop}
+                      fill={enabled ? 'var(--line-2)' : 'var(--amber)'} />
+            : <circle key={i} cx={cx} cy={cy} r="2.6" fill="var(--blue)" opacity="0.45" />;
+        })}
       </svg>
       <div className="vizcap">
-        <span style={{ color: 'var(--red)' }} aria-hidden="true">■</span>{' '}
-        <span ref={count}>{enabled ? 0 : 268}</span> flagged mislabels · 82% precision
+        <span style={{ color: 'var(--amber)' }} aria-hidden="true">■</span>{' '}
+        plate accuracy <span ref={acc}>{enabled ? '69.1' : '90.4'}</span>% · 8-frame voting
       </div>
     </>
   );

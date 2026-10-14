@@ -25,6 +25,7 @@ export const profile: Profile = {
   github: 'https://github.com/Tushika2024',
   linkedin: 'https://www.linkedin.com/in/tushika-garg-84a488318/',
   leetcode: 'https://leetcode.com/u/Tushika_garg/', // REPLACE if handle differs
+  codolio: 'https://codolio.com/profile/tushika_garg',
   photo: '/tushika.jpg',
   resume: '/Tushika-Garg-Resume.pdf',
 };
@@ -34,7 +35,7 @@ export const STAGES: readonly Stage[] = [
   { id: 'background', start: 0.10, label: 'Background',     files: ['honours.md',   'background.md',    'extra.md'] },
   { id: 'work',       start: 0.22, label: 'Skills & work',  files: ['skills.txt',   'experience.log',   'projects/'] },
   { id: 'proj1',      start: 0.34, label: 'CreditShield',   files: ['stack.txt',    'creditshield.py',  'eval/roc'] },
-  { id: 'proj2',      start: 0.46, label: 'SentinelLabel',  files: ['stack.txt',    'sentinellabel.py', 'eval/umap'] },
+  { id: 'proj2',      start: 0.46, label: 'CITY-AI',        files: ['stack.txt',    'anpr_worker.py',   'eval/trajectory'] },
   { id: 'proj3',      start: 0.58, label: 'Sleep → T2DM',   files: ['stack.txt',    'sleep_t2dm.ipynb', 'eval/signal'] },
   { id: 'contact',    start: 0.70, label: 'Get in touch',   files: ['leetcode.log', 'contact.md',       'target-roles.md'] },
 ] as const;
@@ -126,30 +127,31 @@ export const projects: readonly Project[] = [
     ],
   },
   {
-    key: 'sentinel',
+    key: 'cityai',
     n: '02',
-    file: 'sentinellabel.py',
-    title: 'SentinelLabel',
-    blurb: 'label auditing · NLP',
-    metric: '82%',
-    period: 'Feb 2026 – Apr 2026 · semantic label auditing',
-    stack: [['Transformers', 'ENCODER'], ['Cross-encoders', 'SCORING'], ['UMAP', 'REDUCE'], ['HDBSCAN', 'CLUSTER'], ['Scikit-learn', 'PIPELINE']],
-    stackNote: ['Feb 2026 – Apr 2026', 'modular OOP · testable'],
+    file: 'anpr_worker.py',
+    title: 'CITY-AI',
+    blurb: 'ANPR surveillance · SIH 2026',
+    metric: '90.4%',
+    period: 'Sep 2026 – Oct 2026 · Smart India Hackathon 2026',
+    stack: [['YOLO11 · CRNN', 'VISION'], ['PyTorch', 'OCR'], ['Node · Express', 'BACKEND'], ['SQLite', 'STORE'], ['React · Leaflet', 'FRONTEND']],
+    stackNote: ['Sep 2026 – Oct 2026', 'SIH 2026 · team build'],
     bullets: [
-      'Engineered a semantic label auditing framework surfacing 268 mislabelled samples at 82% precision across a 14,000+ NLP corpus- a 3.6x improvement over random sampling.',
-      'Architected a UMAP along with HDBSCAN detection layer isolating structural inconsistencies that survived human review.',
-      'Built object-oriented throughout, so components stay testable and reusable across other corpora.',
+      'Built a city-scale ANPR platform that reads number plates from CCTV feeds and tracks vehicles across 30 cameras over 106,000+ sightings.',
+      'Reached 90.4% plate accuracy on degraded footage by voting across 8 frames per tracked vehicle- up from 69.1% on a single frame.',
+      'Shipped trajectory reconstruction, cloned-plate alerts and a co-presence search that finds vehicles seen at two crime scenes inside a time window.',
     ],
-    tags: ['Transformers', 'NLP', 'Cross-encoders', 'UMAP', 'HDBSCAN'],
-    stats: [['268', 'mislabels found'], ['82%', 'precision'], ['3.6×', 'over random']],
+    tags: ['Python', 'YOLO11', 'PyTorch', 'CRNN', 'Node.js', 'SQLite', 'React', 'Leaflet'],
+    stats: [['90.4%', 'plate accuracy'], ['106K+', 'sightings'], ['30', 'cameras']],
     detail: [
-      'Engineered a semantic label auditing framework across a 14,000+ sample NLP corpus, surfacing 268 mislabelled examples at 82% precision- a 3.6x improvement over random sampling, which is the comparison that actually matters.',
-      'The transformer never predicts the label. It produces the embedding space in which a wrong label becomes geometrically obvious- a measuring instrument rather than a classifier.',
-      'Architected a UMAP reduction plus HDBSCAN clustering layer to isolate structural inconsistencies that had already survived human review. Reduce, cluster, then look hard at whatever refuses to sit inside a cluster.',
-      'Written with modular, object-oriented design so individual components stay testable and reusable across other corpora.',
+      'CITY-AI is a terminal-style surveillance dashboard for traffic authorities, built in a team for Smart India Hackathon 2026. It reads number plates from CCTV feeds and lets an operator follow a vehicle across the city, catch cloned plates and run reverse investigations on crime scenes.',
+      'The OCR path is YOLO11 tracking, plate detection, a PyTorch CRNN reader, then voting. A single clean frame reads 93.6% of plates exactly; on deliberately degraded frames that falls to 69.1%. Voting across 8 frames of the same tracked vehicle recovers it to 90.4%- a 21-point gain from treating a vehicle as a sequence rather than a snapshot.',
+      'Trajectories are stitched from 106,000+ sightings across 30 cameras using 258 learned camera-to-camera links. Each link carries its own normal travel time, so a hop that is impossibly fast flags a cloned plate, and a link slower than its own median flags congestion.',
+      'A misread is not thrown away: a 1-character OCR variant seen at the expected time on a learned link is attached as an inferred sighting, with lower OCR confidence making the misread more likely rather than less.',
+      'The operator UI is a React + Leaflet console with function-key navigation across seven modules, live OCR on uploaded footage, and English and Hindi support, served by an Express API over SQLite.',
     ],
     links: [
-      { kind: 'github', url: 'https://github.com/Tushika2024/data_label_auditor', label: 'Source' }, // REPLACE
+      { kind: 'github', url: 'https://github.com/kunal-motwani/sih-_final2026', label: 'Source' },
     ],
   },
   {
@@ -161,21 +163,22 @@ export const projects: readonly Project[] = [
     metric: '0.84',
     period: 'Nov 2025 – Jan 2026 · wearable health modelling',
     stack: [['Pandas · NumPy', 'WRANGLE'], ['Scikit-learn', 'MODEL'], ['AI-READI dataset', 'SOURCE'], ['Statistical EDA', 'METHOD']],
-    stackNote: ['Nov 2025 – Jan 2026', 'manuscript under review'],
+    stackNote: ['Nov 2025 – Jan 2026', 'presented · ICCIS 2026 (Springer)'],
     bullets: [
       'Engineered a Type-2 Diabetes risk classifier reaching ROC-AUC 0.75 and F1-score 0.84 from raw AI-READI wearable sensor streams.',
       'Formulated a statistical modelling approach converting raw sensor data into structured, decision-ready features.',
-      'Manuscript on Pattern Recognition in Wearable Sleep Data currently under conference review.',
+      'Presented the paper at ICCIS 2026, BITS Pilani K K Birla Goa Campus (Springer proceedings).',
     ],
     tags: ['Python', 'Pandas', 'NumPy', 'Scikit-learn', 'AI-READI'],
-    stats: [['0.75', 'ROC-AUC'], ['0.84', 'F1 score'], ['—', 'under review']],
+    stats: [['0.75', 'ROC-AUC'], ['0.84', 'F1 score'], ['ICCIS', '2026 · presented']],
     detail: [
       'Engineered a Type-2 Diabetes risk classifier reaching ROC-AUC 0.75 and F1-score 0.84, built entirely on scikit-learn- no neural network anywhere in it.',
       'Formulated the feature layer first: converting raw AI-READI wearable sensor streams into structured, decision-ready features took considerably longer than the modelling that followed.',
-      'Manuscript on Pattern Recognition in Wearable Sleep Data is currently under conference review.',
+      'The paper, "Pattern Recognition in Wearable Sleep Data for Type 2 Diabetes Risk Assessment Using Machine Learning" (with Ravneet Kaur and Gagandeep Kaur), was presented at the 8th International Conference on Communication and Intelligent Systems (ICCIS 2026), BITS Pilani K K Birla Goa Campus, on 26–27 September 2026.',
     ],
     links: [
       { kind: 'github', url: 'https://github.com/Tushika2024/Sleep_T2DM_AI-readai-dataset', label: 'Source' }, // REPLACE
+      { kind: 'paper',  url: '/ICCIS_2026_Presentation_Certificate.pdf', label: 'ICCIS certificate' },
     ],
   },
 ] as const;
@@ -244,6 +247,40 @@ export const otherProjects: readonly OtherProjects[] = [
       { kind: 'github', url: 'https://github.com/Tushika2024/MultiModal_AI', label: 'Source' }
     ],
   },
+  {
+    key: 'sentinel',
+    n: '04',
+    title: 'SentinelLabel',
+    blurb: 'label auditing · NLP · metric: 82% precision',
+    period: 'Feb 2026 – Apr 2026 · semantic label auditing',
+    bullets: [
+      'Engineered a semantic label auditing framework across a 14,000+ sample NLP corpus, surfacing 268 mislabelled examples at 82% precision- a 3.6x improvement over random sampling.',
+      'The transformer never predicts the label. It produces the embedding space in which a wrong label becomes geometrically obvious- a measuring instrument rather than a classifier.',
+      'Architected a UMAP reduction plus HDBSCAN clustering layer to isolate structural inconsistencies that had already survived human review.',
+      'Written with modular, object-oriented design so individual components stay testable and reusable across other corpora.',
+    ],
+    tags: ['Transformers', 'NLP', 'Cross-encoders', 'UMAP', 'HDBSCAN', 'Scikit-learn'],
+    links: [
+      { kind: 'github', url: 'https://github.com/Tushika2024/data_label_auditor', label: 'Source' }
+    ],
+  },
+  {
+    key: 'mota-sankalp',
+    n: '05',
+    title: 'MoTA-SANKALP',
+    blurb: 'scholarship scrutiny · SIH 2026 · metric: 6-stage AI check',
+    period: 'Smart India Hackathon 2026 · Ministry of Tribal Affairs',
+    bullets: [
+      'Built in a team an administrator-side platform for Ministry of Tribal Affairs scholarship and fellowship schemes, taking an application from document upload through scrutiny to a sanction PDF.',
+      'Engineered a scrutiny pipeline chaining OCR (English and Hindi), field extraction, YOLO document detection, RapidFuzz name matching, pHash duplicate detection and an IsolationForest anomaly check into one call.',
+      'Formulated scheme eligibility as YAML rules read by a generic evaluator, so a new scheme is a config file rather than new code.',
+      'Designed it so AI flags and explains but never decides- a deterministic resolution agent proposes fixes, the officer approves or rejects with a mandatory reason, and every AI and human step lands in an audit log.',
+    ],
+    tags: ['FastAPI', 'React', 'SQLAlchemy', 'JWT', 'YOLOv8', 'EasyOCR', 'RapidFuzz', 'scikit-learn'],
+    links: [
+      { kind: 'github', url: 'https://github.com/ShreyaSinghal12/MoTA-Sankalp', label: 'Source' }
+    ],
+  },
 ];
 
 /**
@@ -277,6 +314,24 @@ export const certifications: readonly Certification[] = [
     url: 'https://unstop.com/certificate-preview/b2a36787-2c94-4361-8cac-d0b977c49f0c',
     skills: ['Problem solving', 'Technical assessment'],
   },
+  {
+    name: 'ICCIS 2026 — Certificate of Presentation',
+    issuer: 'BITS Pilani K K Birla Goa Campus · SCRS · Springer',
+    mark: 'IC',
+    date: 'Sep 2026',
+    credentialId: 'SCRS/ICCIS 2026/PC/1565',
+    url: '/ICCIS_2026_Presentation_Certificate.pdf',
+    skills: ['Research', 'Machine learning', 'Wearable health data'],
+  },
+  {
+    name: 'American Express Campus Challenge 2026 — Product Track',
+    issuer: 'American Express · Unstop',
+    mark: 'AX',
+    date: '2026',
+    credentialId: '45ce88ca-6aa3-404d-b7dc-80043f176771',
+    url: 'https://unstop.com/certificate-preview/45ce88ca-6aa3-404d-b7dc-80043f176771',
+    skills: ['Product thinking', 'Problem solving'],
+  },
 ] as const;
 
 export const faqs: readonly LabelledPair[] = [
@@ -289,7 +344,7 @@ export const faqs: readonly LabelledPair[] = [
   ['Which project should I look at first?',
    "<strong>CreditShield.</strong> It's the one with a live demo you can poke at, and it's where I made the decisions I'm most willing to defend- reject inference to correct sampling bias, SHAP for auditability, and reporting an ROC-AUC of 0.82 instead of the flattering number I'd have got by ignoring both."],
   ['Can I see your code?',
-   'Everything public is on GitHub at Tushika2024, linked from each project. The sleep behaviour work is under conference review so the manuscript isn&rsquo;t public yet, but the analysis code is.'],
+   'Everything public is on GitHub at Tushika2024, linked from each project. The sleep behaviour paper was presented at ICCIS 2026 and its analysis code is public too. CITY-AI and MoTA-SANKALP were team builds for SIH 2026 and live in teammates&rsquo; repositories.'],
   ['Have you worked with production data?',
    'Yes- at Kanha Milk I migrated 10,000+ Excel records into MySQL. That was my first encounter with data that fails in ways benchmark datasets never do. More lines of that pipeline went to reconciling inconsistent formats than to the actual load, which taught me more than any clean public dataset has.'],
   ['What are you learning next?',

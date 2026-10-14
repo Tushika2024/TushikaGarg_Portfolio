@@ -47,6 +47,7 @@ export function Contact() {
             <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
             <a href={profile.leetcode} target="_blank" rel="noreferrer">LeetCode</a>
+            <a href={profile.codolio} target="_blank" rel="noreferrer">Codolio</a>
           </div>
           <div className="foot-col">
             <h3>On this page</h3>

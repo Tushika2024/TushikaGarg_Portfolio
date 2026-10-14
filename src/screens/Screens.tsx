@@ -4,7 +4,7 @@ import {
   education, extras, targetRoles,
 } from '../data/content';
 import type { Openable, CaseStudy } from '../types';
-import { RocCurve, UmapScatter, SleepWave, Heatmap, EtlBar } from '../components/viz/Viz';
+import { RocCurve, TrajectoryTrace, SleepWave, Heatmap, EtlBar } from '../components/viz/Viz';
 import ProjectLinks from '../components/ProjectLinks';
 
 /* Photo, falling back to initials rather than a broken image. */
@@ -93,8 +93,12 @@ export const LeftScreen = forwardRef<HTMLDivElement, ScreenProps>(
           <div className="bignum">300+</div>
           <div className="submeta">DSA · LeetCode</div>
           <Heatmap />
-          <a className="plink" style={{ marginTop: 14 }} href={profile.leetcode}
-             target="_blank" rel="noreferrer">View LeetCode profile</a>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
+            <a className="plink" href={profile.leetcode}
+               target="_blank" rel="noreferrer">LeetCode</a>
+            <a className="plink" href={profile.codolio}
+               target="_blank" rel="noreferrer">Codolio</a>
+          </div>
         </Slab>
       </div>
     </div>
@@ -137,7 +141,7 @@ export const RightScreen = forwardRef<HTMLDivElement, RightProps>(
         </Slab>
 
         <Slab active={is(3)} reduced={reduced}><RocCurve progress={progress} enabled={!reduced} /></Slab>
-        <Slab active={is(4)} reduced={reduced}><UmapScatter progress={progress} enabled={!reduced} /></Slab>
+        <Slab active={is(4)} reduced={reduced}><TrajectoryTrace progress={progress} enabled={!reduced} /></Slab>
         <Slab active={is(5)} reduced={reduced}><SleepWave progress={progress} enabled={!reduced} /></Slab>
 
         <Slab active={is(projects.length + 3)} reduced={reduced}>

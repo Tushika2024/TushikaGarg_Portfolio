@@ -14,6 +14,7 @@ export interface Profile {
   readonly github: string;
   readonly linkedin: string;
   readonly leetcode: string;
+  readonly codolio: string;
   readonly photo: string;
   readonly resume: string;
 }
